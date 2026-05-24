@@ -148,6 +148,8 @@ def cargar_archivo():
         header=8
     )
 
+    archivo = limpiar_dataframe(archivo)
+
     # ELIMINAR COLUMNA AÑO
     if "AÑO" in archivo.columns:
 
