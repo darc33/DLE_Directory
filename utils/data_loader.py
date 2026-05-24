@@ -32,19 +32,19 @@ def cargar_datos():
 
 def obtener_resumen_anual(resoluciones):
 
-    resoluciones["año"] = pd.to_datetime(
+    resoluciones["Año"] = pd.to_datetime(
         resoluciones["Fecha de Resolución"]
         #errors = "coerce"
     ).dt.year
 
     resumen = (
         resoluciones
-        .groupby("año")
+        .groupby("Año")
         .agg(
-            resoluciones=("# RESOLUCIÓN", "count"),
-            notificadas=("Fecha de Notificación", lambda x: x.notna().sum()),
-            ejecutoriadas=("Fecha de Ejecutoria", lambda x: x.notna().sum()),
-            archivadas=("Fecha entrega archivo", lambda x: x.notna().sum())
+            Resoluciones=("# RESOLUCIÓN", "count"),
+            Notificadas=("Fecha de Notificación", lambda x: x.notna().sum()),
+            Ejecutoriadas=("Fecha de Ejecutoria", lambda x: x.notna().sum()),
+            Archivadas=("Fecha entrega archivo", lambda x: x.notna().sum())
         )
         .reset_index()
         .sort_values("año", ascending=False)
