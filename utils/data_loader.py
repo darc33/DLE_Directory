@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 import requests
 from io import BytesIO
+from datetime import datetime
 
 # LINK DIRECTO DE ONEDRIVE
 EXCEL_URL = "https://internoredpedu-my.sharepoint.com/:x:/g/personal/cadel15_educacionbogota_edu_co/IQAJTK1Jq-gESaNLyJy_1tzrARu5pMHuf6K64Ircj1nWeP4?e=Zkx9sx&download=1"
@@ -20,7 +21,7 @@ def limpiar_dataframe(df):
     return df
 
 def cargar_datos():
-
+    update_date = datetime.now()
     response = requests.get(EXCEL_URL)
 
     if response.status_code != 200:
@@ -79,7 +80,8 @@ def cargar_datos():
         etdh,
         cea,
         cerrados,
-        ilegales
+        ilegales,
+        update_date
     )
 
 

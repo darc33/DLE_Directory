@@ -14,12 +14,16 @@ cargar_estilos()
     etdh,
     cea,
     cerrados,
-    ilegales
+    ilegales,
+    _
 ) = cargar_datos()
 
 categoria = st.session_state.get("categoria", None)
 
 st.title(f"CATEGORÍA: {categoria}")
+
+if st.button("⬅️ Volver al inicio"):
+    st.switch_page("app.py")
 
 if categoria == "OFICIALES":
     df = oficiales

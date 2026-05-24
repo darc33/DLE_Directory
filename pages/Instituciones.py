@@ -14,10 +14,15 @@ cargar_estilos()
     etdh,
     cea,
     cerrados,
-    ilegales
+    ilegales,
+    _
 ) = cargar_datos()
 
+
 st.title("CONSULTA DE INSTITUCIONES")
+
+if st.button("⬅️ Volver al inicio"):
+    st.switch_page("app.py")
 
 institucion_nombre = st.selectbox(
     "Buscar institución",

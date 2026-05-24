@@ -14,7 +14,22 @@ st.set_page_config(
     page_icon="🏫",
     layout="wide"
 )
+
 cargar_estilos()
+
+# CARGA DE DATOS
+(
+    instituciones,
+    resoluciones,
+    _,
+    _,
+    _,
+    _,
+    _,
+    cerrados,
+    _,
+    update_date
+) = cargar_datos()
 
 # HEADER
 top_left, top_right = st.columns([5, 1])
@@ -27,12 +42,12 @@ with top_left:
 
 with top_right:
 
-    st.metric(
-        "Versión",
-        "v1.1.0"
-    )
+    st.caption("Versión v1.1.0")
 
-    st.caption("Actualizado: 24/05/2026")
+    st.caption(
+    f"Actualizado: "
+    f"{update_date.strftime('%d/%m/%Y %H:%M')}"
+)
 
 # BOTÓN CONSULTA
 if st.button(
@@ -42,19 +57,6 @@ if st.button(
     st.switch_page("pages/Instituciones.py")
 
 st.divider()
-
-# CARGA DE DATOS
-(
-    instituciones,
-    resoluciones,
-    _,
-    _,
-    _,
-    _,
-    _,
-    cerrados,
-    _
-) = cargar_datos()
 
 # KPIs
 conteos = obtener_conteos(instituciones)
