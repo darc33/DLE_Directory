@@ -5,34 +5,45 @@ from utils.styles import cargar_estilos
 
 cargar_estilos()
 
-instituciones, _ = cargar_datos()
+(
+    instituciones,
+    _,
+    oficiales,
+    privados,
+    adultos,
+    etdh,
+    cea,
+    cerrados,
+    ilegales
+) = cargar_datos()
 
 categoria = st.session_state.get("categoria", None)
 
 st.title(f"CATEGORÍA: {categoria}")
 
 if categoria == "OFICIALES":
-    df = instituciones[(instituciones["TIPO"] == "OFICIAL") & (instituciones["STATUS"] == "ABIERTO")]
+    df = oficiales
 
 elif categoria == "PRIVADOS":
-    df = instituciones[(instituciones["TIPO"] == "PRIVADO") & (instituciones["STATUS"] == "ABIERTO")]
+    df = privados
 
 elif categoria == "ADULTOS":
-    df = instituciones[(instituciones["TIPO"] == "ADULTOS") & (instituciones["STATUS"] == "ABIERTO")]
+    df = adultos
 
 elif categoria == "ETDH":
-    df = instituciones[(instituciones["TIPO"] == "ETDH") & (instituciones["STATUS"] == "ABIERTO")] 
+    df = etdh
 
 elif categoria == "CEAs":
-    df = instituciones[(instituciones["TIPO"] == "CEA") & (instituciones["STATUS"] == "ABIERTO")]
+    df = cea
 
 elif categoria == "ILEGALES":
-    df = instituciones[instituciones["STATUS"] == "ILEGAL"]
+    df = ilegales
 
 elif categoria == "CERRADOS":
-    df = instituciones[instituciones["STATUS"] == "CERRADO"]
+    df = cerrados
 
 else:
+
     df = instituciones
 
 st.dataframe(

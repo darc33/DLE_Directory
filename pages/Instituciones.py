@@ -5,7 +5,17 @@ from utils.styles import cargar_estilos
 
 cargar_estilos()
 
-instituciones, resoluciones = cargar_datos()
+(
+    instituciones,
+    resoluciones,
+    _,
+    _,
+    _,
+    _,
+    _,
+    _,
+    _
+) = cargar_datos()
 
 st.title("CONSULTA DE INSTITUCIONES")
 

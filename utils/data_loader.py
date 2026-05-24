@@ -7,6 +7,18 @@ from io import BytesIO
 EXCEL_URL = "https://internoredpedu-my.sharepoint.com/:x:/g/personal/cadel15_educacionbogota_edu_co/IQAJTK1Jq-gESaNLyJy_1tzrARu5pMHuf6K64Ircj1nWeP4?e=Zkx9sx&download=1"
 
 @st.cache_data(ttl=300)
+def limpiar_dataframe(df):
+
+    for col in df.select_dtypes(include=["object"]).columns:
+        df[col] = (
+            df[col]
+            .fillna("")
+            .astype(str)
+            .str.strip()
+        )
+
+    return df
+
 def cargar_datos():
 
     response = requests.get(EXCEL_URL)
@@ -27,7 +39,102 @@ def cargar_datos():
         sheet_name="CONSOLIDADO RESOLUCIONES"
     )
 
-    return instituciones, resoluciones
+    # CATEGORÍAS
+    hojas = [
+        "OFICIALES",
+        "PRIVADOS",
+        "Adultos",
+        "ETDH",
+        "CEAs",
+        "CERRADOS",
+        "ILEGALES"
+    ]
+    dataframes = {}
+
+    for hoja in hojas:
+        excel_file.seek(0)
+
+        df = pd.read_excel(
+            excel_file,
+            sheet_name=hoja,
+            header=1
+        )
+
+        dataframes[hoja] = limpiar_dataframe(df)
+    
+    oficiales = dataframes["OFICIALES"]
+    privados = dataframes["PRIVADOS"]
+    adultos = dataframes["Adultos"]
+    etdh = dataframes["ETDH"]
+    cea = dataframes["CEAs"]
+    cerrados = dataframes["CERRADOS"]
+    ilegales = dataframes["ILEGALES"]
+    '''
+    oficiales = pd.read_excel(
+        excel_file,
+        sheet_name="OFICIALES",
+        header=1
+    )
+
+    excel_file.seek(0)
+
+    privados = pd.read_excel(
+        excel_file,
+        sheet_name="PRIVADOS",
+        header=1
+    )
+
+    excel_file.seek(0)
+
+    adultos = pd.read_excel(
+        excel_file,
+        sheet_name="Adultos",
+        header=1
+    )
+
+    excel_file.seek(0)
+
+    etdh = pd.read_excel(
+        excel_file,
+        sheet_name="ETDH",
+        header=1
+    )
+
+    excel_file.seek(0)
+
+    cea = pd.read_excel(
+        excel_file,
+        sheet_name="CEAs",
+        header=1
+    )
+
+    excel_file.seek(0)
+
+    cerrados = pd.read_excel(
+        excel_file,
+        sheet_name="CERRADOS",
+        header=1
+    )
+
+    excel_file.seek(0)
+
+    ilegales = pd.read_excel(
+        excel_file,
+        sheet_name="ILEGALES",
+        header=1
+    )'''
+
+    return (
+        instituciones,
+        resoluciones,
+        oficiales,
+        privados,
+        adultos,
+        etdh,
+        cea,
+        cerrados,
+        ilegales
+    )
 
 
 def obtener_resumen_anual(resoluciones):

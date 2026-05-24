@@ -13,9 +13,20 @@ cargar_estilos()
 
 st.title("DASHBOARD")
 
-instituciones, resoluciones = cargar_datos()
+(
+    instituciones,
+    resoluciones,
+    _,
+    _,
+    _,
+    _,
+    _,
+    cerrados,
+    _
+) = cargar_datos()
 
 conteos = obtener_conteos(instituciones)
+conteos["CERRADOS"] = len(cerrados)
 
 resumen = obtener_resumen_anual(resoluciones)
 
@@ -27,7 +38,7 @@ with left:
 
         if st.button(
             f"{valor}\n\n{categoria}",
-            use_container_width=True
+            width='stretch', #use_container_width=True
         ):
 
             st.session_state["categoria"] = categoria
