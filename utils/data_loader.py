@@ -7,13 +7,21 @@ EXCEL_URL = "https://internoredpedu-my.sharepoint.com/:x:/g/personal/cadel15_edu
 @st.cache_data(ttl=300)
 def cargar_datos():
 
+    response = requests.get(EXCEL_URL)
+
+    if response.status_code != 200:
+        raise Exception(f"Error descargando archivo: {response.status_code}")
+
+    excel_file = BytesIO(response.content)
+
     instituciones = pd.read_excel(
-        EXCEL_URL,
+        excel_file,
         sheet_name="LISTAS"
     )
-
+    excel_file.seek(0)
+    
     resoluciones = pd.read_excel(
-        EXCEL_URL,
+        excel_file,
         sheet_name="CONSOLIDADO RESOLUCIONES"
     )
 
