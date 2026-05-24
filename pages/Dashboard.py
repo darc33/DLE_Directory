@@ -43,7 +43,7 @@ with right:
 
     fig = px.bar(
         resumen,
-        x="año",
+        x="Año",
         y="resoluciones",
         title="Resoluciones por Año"
     )
