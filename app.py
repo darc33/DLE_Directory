@@ -42,12 +42,20 @@ with top_left:
 
 with top_right:
 
-    st.caption("Versión v1.1.0")
-
-    st.caption(
-    f"Actualizado: "
-    f"{update_date.strftime('%d/%m/%Y %H:%M')}"
-)
+    st.markdown(
+        f"""
+        <div style="
+            text-align: right;
+            font-size: 0.85rem;
+            margin-top: 35px;
+            line-height: 1.6;
+        ">
+            <b>Versión:</b> v1.1.0<br>
+            <b>Actualizado:</b> {update_date.strftime('%d/%m/%Y %H:%M')}
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
 # BOTÓN CONSULTA
 if st.button(
