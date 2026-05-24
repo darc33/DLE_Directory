@@ -77,16 +77,6 @@ with col2:
     else:
         hoja_detalle = instituciones
 
-    '''print("\n===== DEBUG BUSQUEDA =====")
-    print("INSTITUCION BASE:")
-    print(repr(institucion["Nombre Institución"]))
-    print("\nINSTITUCIONES EN HOJA:")
-    print(
-        hoja_detalle["INSTITUCIÓN"]
-        .astype(str)
-        .head(20)
-        .tolist()
-    )'''
     # Buscar institución en hoja correspondiente
     detalle = hoja_detalle[
         hoja_detalle["INSTITUCIÓN"] == institucion["Nombre Institución"]

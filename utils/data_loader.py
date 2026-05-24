@@ -69,61 +69,7 @@ def cargar_datos():
     cea = dataframes["CEAs"]
     cerrados = dataframes["CERRADOS"]
     ilegales = dataframes["ILEGALES"]
-    '''
-    oficiales = pd.read_excel(
-        excel_file,
-        sheet_name="OFICIALES",
-        header=1
-    )
-
-    excel_file.seek(0)
-
-    privados = pd.read_excel(
-        excel_file,
-        sheet_name="PRIVADOS",
-        header=1
-    )
-
-    excel_file.seek(0)
-
-    adultos = pd.read_excel(
-        excel_file,
-        sheet_name="Adultos",
-        header=1
-    )
-
-    excel_file.seek(0)
-
-    etdh = pd.read_excel(
-        excel_file,
-        sheet_name="ETDH",
-        header=1
-    )
-
-    excel_file.seek(0)
-
-    cea = pd.read_excel(
-        excel_file,
-        sheet_name="CEAs",
-        header=1
-    )
-
-    excel_file.seek(0)
-
-    cerrados = pd.read_excel(
-        excel_file,
-        sheet_name="CERRADOS",
-        header=1
-    )
-
-    excel_file.seek(0)
-
-    ilegales = pd.read_excel(
-        excel_file,
-        sheet_name="ILEGALES",
-        header=1
-    )'''
-
+    
     return (
         instituciones,
         resoluciones,
@@ -144,17 +90,7 @@ def obtener_resumen_anual(resoluciones):
         #errors = "coerce"
     ).dt.year
 
-    """# DEBUG
-    debug_2026 = resoluciones[
-        (resoluciones["Año"] == 2019)
-    ]
-
-    print("\n===== NOTIFICADAS 2024 =====")
-    print(debug_2026[[
-        "# RESOLUCIÓN",
-        "Fecha de Resolución",
-        "Fecha de Notificación"
-    ]].to_string())"""
+    
 
     resumen = (
         resoluciones
@@ -170,7 +106,6 @@ def obtener_resumen_anual(resoluciones):
     )
 
     return resumen
-
 
 def obtener_conteos(instituciones):
 
