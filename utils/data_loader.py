@@ -37,6 +37,18 @@ def obtener_resumen_anual(resoluciones):
         #errors = "coerce"
     ).dt.year
 
+    """# DEBUG
+    debug_2026 = resoluciones[
+        (resoluciones["Año"] == 2019)
+    ]
+
+    print("\n===== NOTIFICADAS 2024 =====")
+    print(debug_2026[[
+        "# RESOLUCIÓN",
+        "Fecha de Resolución",
+        "Fecha de Notificación"
+    ]].to_string())"""
+
     resumen = (
         resoluciones
         .groupby("Año")
