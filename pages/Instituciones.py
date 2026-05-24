@@ -8,13 +8,13 @@ cargar_estilos()
 (
     instituciones,
     resoluciones,
-    _,
-    _,
-    _,
-    _,
-    _,
-    _,
-    _
+    oficiales,
+    privados,
+    adultos,
+    etdh,
+    cea,
+    cerrados,
+    ilegales
 ) = cargar_datos()
 
 st.title("CONSULTA DE INSTITUCIONES")
@@ -45,21 +45,79 @@ with col1:
     """)
 
 with col2:
-    st.markdown(f"""
-    ### Información de Contacto
-    """)
 
-    '''st.markdown(f"""
-    ### Información de Contacto
+    st.markdown("### Información Detallada")
 
-    **Dirección:** {institucion['direccion']}
+    tipo = str(institucion["TIPO"]).strip().upper()
+    status = str(institucion["STATUS"]).strip().upper()
 
-    **Teléfono:** {institucion['telefono']}
+    # Prioridad a status
+    if status == "ILEGAL":
+        hoja_detalle = ilegales
 
-    **Email:** {institucion['email']}
+    elif status == "CERRADO":
+        hoja_detalle = cerrados
 
-    **Contacto:** {institucion['contacto']}
-    """)'''
+    # Seleccionar hoja según tipo
+    elif tipo == "OFICIAL":
+        hoja_detalle = oficiales
+
+    elif tipo == "PRIVADO":
+        hoja_detalle = privados
+
+    elif tipo == "ADULTOS":
+        hoja_detalle = adultos
+
+    elif tipo == "ETDH":
+        hoja_detalle = etdh
+
+    elif tipo == "CEA":
+        hoja_detalle = cea
+
+    else:
+        hoja_detalle = instituciones
+
+    print("\n===== DEBUG BUSQUEDA =====")
+    print("INSTITUCION BASE:")
+    print(repr(institucion["Nombre Institución"]))
+    print("\nINSTITUCIONES EN HOJA:")
+    print(
+        hoja_detalle["INSTITUCIÓN"]
+        .astype(str)
+        .head(20)
+        .tolist()
+    )
+    # Buscar institución en hoja correspondiente
+    detalle = hoja_detalle[
+        hoja_detalle["INSTITUCIÓN"] == institucion["Nombre Institución"]
+    ]
+
+    if not detalle.empty:
+
+        detalle = detalle.iloc[0]
+
+        columnas_excluir = [
+            "Nº",
+            "CLASE",
+            "CODIGO DANE",
+            "Nombre Institución",
+            "INSTITUCIÓN",
+            "TIPO"
+        ]
+
+        for columna in detalle.index:
+
+            if columna not in columnas_excluir:
+
+                valor = detalle[columna]
+
+                # Quitar hora si es fecha
+                if isinstance(valor, pd.Timestamp):
+                    valor = valor.date()
+
+                st.markdown(f"""
+                **{columna}:** {valor}
+                """)
 
 st.divider()
 

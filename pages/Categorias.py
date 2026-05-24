@@ -1,5 +1,5 @@
 import streamlit as st
-
+import pandas as pd
 from utils.data_loader import cargar_datos
 from utils.styles import cargar_estilos
 
@@ -45,6 +45,16 @@ elif categoria == "CERRADOS":
 else:
 
     df = instituciones
+
+# Detectar y formatear columnas fecha
+for col in df.columns:
+
+    if "fecha" in str(col).lower():
+
+        df[col] = pd.to_datetime(
+            df[col],
+            errors="coerce"
+        ).dt.date
 
 st.dataframe(
     df,
