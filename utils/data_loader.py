@@ -4,10 +4,17 @@ import requests
 from io import BytesIO
 from datetime import datetime
 
+ENV = st.secrets["ENV"]
+
+config = st.secrets[ENV]
+
+CACHE_TTL = config["TTL"]
+
 # LINK DIRECTO DE ONEDRIVE
 EXCEL_URL = "https://internoredpedu-my.sharepoint.com/:x:/g/personal/cadel15_educacionbogota_edu_co/IQAJTK1Jq-gESaNLyJy_1tzrARu5pMHuf6K64Ircj1nWeP4?e=Zkx9sx&download=1"
+ARCHIVO_URL = "https://internoredpedu-my.sharepoint.com/:x:/g/personal/diego_ramirez441_educacionbogota_edu_co/IQBZ7hqV5TzEQKzNJr_5I-YcAYATXoegNCttZu35YqJy13Q?e=5yUApD&download=1"
 
-@st.cache_data(ttl=300)
+
 def limpiar_dataframe(df):
 
     for col in df.select_dtypes(include=["object"]).columns:
@@ -20,6 +27,7 @@ def limpiar_dataframe(df):
 
     return df
 
+@st.cache_data(ttl=300)
 def cargar_datos():
     update_date = datetime.now()
     response = requests.get(EXCEL_URL)
@@ -120,3 +128,41 @@ def obtener_conteos(instituciones):
         "ILEGALES": len(instituciones[instituciones["STATUS"] == "ILEGAL"]),
         "CERRADOS": len(instituciones[instituciones["STATUS"] == "CERRADO"]),
     }
+
+@st.cache_data(ttl=300)
+def cargar_archivo():
+
+    response = requests.get(ARCHIVO_URL)
+
+    if response.status_code != 200:
+        raise Exception(
+            f"Error descargando archivo: {response.status_code}"
+        )
+
+    excel_file = BytesIO(response.content)
+
+    # LEER TABLA
+    archivo = pd.read_excel(
+        excel_file,
+        sheet_name="FUID EDITABLE",
+        header=8
+    )
+
+    # ELIMINAR COLUMNA AÑO
+    if "AÑO" in archivo.columns:
+
+        archivo = archivo.drop(columns=["AÑO"])
+
+    # LEER MÉTRICAS
+    excel_file.seek(0)
+
+    resumen = pd.read_excel(
+        excel_file,
+        sheet_name="FUID EDITABLE",
+        header=None
+    )
+
+    total_cajas = resumen.iloc[6, 15]      # P7
+    total_carpetas = resumen.iloc[6, 17]   # R7
+
+    return archivo, total_cajas, total_carpetas
