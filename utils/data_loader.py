@@ -47,7 +47,7 @@ def obtener_resumen_anual(resoluciones):
             Archivadas=("Fecha entrega archivo", lambda x: x.notna().sum())
         )
         .reset_index()
-        .sort_values("año", ascending=False)
+        .sort_values("Año", ascending=False)
     )
 
     return resumen
