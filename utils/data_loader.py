@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 
 # LINK DIRECTO DE ONEDRIVE
-EXCEL_URL = "https://internoredpedu-my.sharepoint.com/:x:/g/personal/cadel15_educacionbogota_edu_co/IQAJTK1Jq-gESaNLyJy_1tzrARu5pMHuf6K64Ircj1nWeP4?e=Zkx9sx"
+EXCEL_URL = "https://internoredpedu-my.sharepoint.com/:x:/g/personal/cadel15_educacionbogota_edu_co/IQAJTK1Jq-gESaNLyJy_1tzrARu5pMHuf6K64Ircj1nWeP4?e=Zkx9sx&download=1"
 
 @st.cache_data(ttl=300)
 def cargar_datos():
