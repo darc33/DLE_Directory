@@ -7,6 +7,18 @@ from utils.data_loader import (
     obtener_conteos
 )
 
+try:
+    resultado_de_la_funcion = cargar_datos()
+    
+    # Esto nos mostrará en la pantalla de la nube qué tipo de dato está saliendo
+    st.write("¿Qué tipo de dato devolvió?", type(resultado_de_la_funcion))
+    st.write("¿Cuántos elementos hay dentro?", len(resultado_de_la_funcion))
+    st.write("Contenido real que llegó:", resultado_de_la_funcion)
+
+except Exception as error_del_excel:
+    # Si el Excel falla en la nube por permisos o rutas, lo veremos aquí en rojo
+    st.error(f"El Excel falló al cargarse en la nube debido a: {error_del_excel}")
+
 from utils.styles import cargar_estilos
 
 st.set_page_config(
