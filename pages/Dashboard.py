@@ -11,7 +11,7 @@ from utils.styles import cargar_estilos
 
 cargar_estilos()
 
-st.title("BUSCAR INSTITUCIONES")
+st.title("DASHBOARD")
 
 instituciones, resoluciones = cargar_datos()
 
@@ -37,7 +37,7 @@ with right:
 
     st.dataframe(
         resumen,
-        use_container_width=True,
+        width='stretch', #use_container_width=True,
         hide_index=True
     )
 
@@ -50,5 +50,5 @@ with right:
 
     st.plotly_chart(
         fig,
-        use_container_width=True
+        width='stretch', #use_container_width=True
     )
