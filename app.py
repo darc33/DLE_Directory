@@ -1,5 +1,6 @@
 import streamlit as st
 import plotly.express as px
+from config import VERSION
 
 from utils.data_loader import (
     cargar_datos,
@@ -50,7 +51,7 @@ with top_right:
             margin-top: 35px;
             line-height: 1.6;
         ">
-            <b>Versión:</b> v1.1.0<br>
+            <b>Versión:</b> {VERSION}<br>
             <b>Actualizado:</b> {update_date.strftime('%d/%m/%Y %H:%M')}
         </div>
         """,

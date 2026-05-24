@@ -3,12 +3,9 @@ import streamlit as st
 import requests
 from io import BytesIO
 from datetime import datetime
+from config import TTL
 
-ENV = st.secrets["ENV"]
-
-config = st.secrets[ENV]
-
-CACHE_TTL = config["TTL"]
+CACHE_TTL = TTL
 
 # LINK DIRECTO DE ONEDRIVE
 EXCEL_URL = "https://internoredpedu-my.sharepoint.com/:x:/g/personal/cadel15_educacionbogota_edu_co/IQAJTK1Jq-gESaNLyJy_1tzrARu5pMHuf6K64Ircj1nWeP4?e=Zkx9sx&download=1"
