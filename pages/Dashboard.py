@@ -1,0 +1,54 @@
+import streamlit as st
+import plotly.express as px
+
+from utils.data_loader import (
+    cargar_datos,
+    obtener_resumen_anual,
+    obtener_conteos
+)
+
+from utils.styles import cargar_estilos
+
+cargar_estilos()
+
+st.title("BUSCAR INSTITUCIONES")
+
+instituciones, resoluciones = cargar_datos()
+
+conteos = obtener_conteos(instituciones)
+
+resumen = obtener_resumen_anual(resoluciones)
+
+left, right = st.columns([1, 5])
+
+with left:
+
+    for categoria, valor in conteos.items():
+
+        if st.button(
+            f"{valor}\n\n{categoria}",
+            use_container_width=True
+        ):
+
+            st.session_state["categoria"] = categoria
+            #st.switch_page("pages/3_📂_Categorias.py")
+
+with right:
+
+    st.dataframe(
+        resumen,
+        use_container_width=True,
+        hide_index=True
+    )
+
+    fig = px.bar(
+        resumen,
+        x="año",
+        y="resoluciones",
+        title="Resoluciones por Año"
+    )
+
+    st.plotly_chart(
+        fig,
+        use_container_width=True
+    )
