@@ -44,5 +44,13 @@ def cargar_estilos():
         border: 1px solid #444;
     }
 
+    .stDataFrame td {
+        text-align: center !important;
+    }
+
+    .stDataFrame th {
+        text-align: center !important;
+    }
+
     </style>
     """, unsafe_allow_html=True)
