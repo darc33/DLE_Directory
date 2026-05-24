@@ -31,7 +31,7 @@ with left:
         ):
 
             st.session_state["categoria"] = categoria
-            #st.switch_page("pages/3_📂_Categorias.py")
+            st.switch_page("pages/Categorias.py")
 
 with right:
 
