@@ -204,5 +204,6 @@ def cargar_almacen():
         sheet_name="ALMACEN"
     )
     excel_file.seek(0)
+    almacen = limpiar_dataframe(almacen)
 
     return almacen
