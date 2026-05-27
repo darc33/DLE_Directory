@@ -11,6 +11,7 @@ CACHE_TTL = TTL
 EXCEL_URL = "https://internoredpedu-my.sharepoint.com/:x:/g/personal/cadel15_educacionbogota_edu_co/IQAJTK1Jq-gESaNLyJy_1tzrARu5pMHuf6K64Ircj1nWeP4?e=Zkx9sx&download=1"
 ARCHIVO_URL = "https://internoredpedu-my.sharepoint.com/:x:/g/personal/diego_ramirez441_educacionbogota_edu_co/IQBZ7hqV5TzEQKzNJr_5I-YcAYATXoegNCttZu35YqJy13Q?e=5yUApD&download=1"
 BIENES_URL = "https://internoredpedu-my.sharepoint.com/:x:/g/personal/cadel15_educacionbogota_edu_co/IQC_qbnoTCIkSLoHV6ZDq8NZARlxDxaAxHddP56YwbRRK9I?e=aOgcdu&download=1"
+CONTACTOS_URL = "https://internoredpedu-my.sharepoint.com/:x:/g/personal/cadel15_educacionbogota_edu_co/IQDvw4jB4C6yQbHIDmIFVQFIAZINoyw40m5GhT3WWPq9ZSU?e=zciC3T&download=1"
 
 def limpiar_dataframe(df):
 
@@ -207,3 +208,32 @@ def cargar_almacen():
     almacen = limpiar_dataframe(almacen)
 
     return almacen
+
+@st.cache_data(ttl=300)
+def cargar_contactos():
+
+    response = requests.get(CONTACTOS_URL)
+
+    if response.status_code != 200:
+        raise Exception(
+            f"Error descargando archivo: {response.status_code}"
+        )
+
+    excel_file = BytesIO(response.content)
+
+    contactos = pd.read_excel(
+        excel_file
+    )
+    excel_file.seek(0)
+    contactos = limpiar_dataframe(contactos)
+    # Limpiar teléfonos
+    for col in ["CELULAR", "TELEFONO"]:
+
+        contactos[col] = (
+            contactos[col]
+            .fillna("")
+            .astype(str)
+            .str.replace(".0", "", regex=False)
+        )
+
+    return contactos
