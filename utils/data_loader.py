@@ -10,7 +10,7 @@ CACHE_TTL = TTL
 # LINK DIRECTO DE ONEDRIVE
 EXCEL_URL = "https://internoredpedu-my.sharepoint.com/:x:/g/personal/cadel15_educacionbogota_edu_co/IQAJTK1Jq-gESaNLyJy_1tzrARu5pMHuf6K64Ircj1nWeP4?e=Zkx9sx&download=1"
 ARCHIVO_URL = "https://internoredpedu-my.sharepoint.com/:x:/g/personal/diego_ramirez441_educacionbogota_edu_co/IQBZ7hqV5TzEQKzNJr_5I-YcAYATXoegNCttZu35YqJy13Q?e=5yUApD&download=1"
-
+BIENES_URL = "https://internoredpedu-my.sharepoint.com/:x:/g/personal/cadel15_educacionbogota_edu_co/IQC_qbnoTCIkSLoHV6ZDq8NZARlxDxaAxHddP56YwbRRK9I?e=aOgcdu&download=1"
 
 def limpiar_dataframe(df):
 
@@ -165,3 +165,44 @@ def cargar_archivo():
     total_carpetas = resumen.iloc[6, 17]   # R7
 
     return archivo, total_cajas, total_carpetas
+
+@st.cache_data(ttl=300)
+def cargar_bienes():
+
+    response = requests.get(BIENES_URL)
+
+    if response.status_code != 200:
+        raise Exception(
+            f"Error descargando archivo: {response.status_code}"
+        )
+
+    excel_file = BytesIO(response.content)
+
+    bienes = pd.read_excel(
+        excel_file,
+        sheet_name="BIENES"
+    )
+    excel_file.seek(0)
+    bienes = limpiar_dataframe(bienes)
+
+    return bienes
+
+@st.cache_data(ttl=300)
+def cargar_almacen():
+
+    response = requests.get(BIENES_URL)
+
+    if response.status_code != 200:
+        raise Exception(
+            f"Error descargando archivo: {response.status_code}"
+        )
+
+    excel_file = BytesIO(response.content)
+
+    almacen = pd.read_excel(
+        excel_file,
+        sheet_name="ALMACEN"
+    )
+    excel_file.seek(0)
+
+    return almacen
